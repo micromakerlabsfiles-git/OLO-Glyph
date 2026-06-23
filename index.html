@@ -975,6 +975,19 @@
                 </div>
               </div>
             </div>
+
+            <!-- NVS MEMORY MANAGEMENT CARD -->
+            <div class="config-card mt-3">
+              <span class="config-card-title"><i class="fas fa-trash-can text-danger"></i> NVS Memory Management</span>
+              <p class="small text-muted mb-3" style="line-height:1.5;">Resetting the NVS memory clears all stored configurations (WiFi, weather settings, timezone, calibrations, and logs). This is recommended if you experience flash defragmentation issues.</p>
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <button class="btn btn-danger w-100" onclick="btnResetSettings()">
+                    <i class="fas fa-trash-can me-2"></i> Reset NVS Memory
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- LED LIGHTING TAB -->
@@ -1201,6 +1214,8 @@
 
     let port, writer, reader;
     let timeSyncInterval, weatherSyncInterval;
+    let writeQueue = [];
+    let isWriting = false;
 
     async function startConnection() {
       try {
@@ -1220,7 +1235,7 @@
         updateConnectionState(true);
         setTimeout(() => sendCmd('GET_SETTINGS'), 1500);
 
-        // Sync local PC time immediately and every 10 seconds
+        // Sync local PC time immediately and every 1 hour
         setTimeout(() => {
           if (writer) {
             const epoch = Math.floor(Date.now() / 1000);
@@ -1234,7 +1249,7 @@
             const offset = -new Date().getTimezoneOffset() * 60;
             send('TIME_SET', `${epoch},${offset}`);
           }
-        }, 10000);
+        }, 3600000);
 
         // Refresh weather
         setTimeout(updateWeatherFromPC, 3000);
@@ -1250,8 +1265,31 @@
       try {
         if (timeSyncInterval) { clearInterval(timeSyncInterval); timeSyncInterval = null; }
         if (weatherSyncInterval) { clearInterval(weatherSyncInterval); weatherSyncInterval = null; }
-        if (writer) { writer.releaseLock(); writer = null; }
-        if (port) { await port.close(); port = null; }
+        
+        writeQueue = [];
+        isWriting = false;
+
+        if (reader) {
+          try {
+            await reader.cancel();
+          } catch (e) {}
+          try {
+            reader.releaseLock();
+          } catch (e) {}
+          reader = null;
+        }
+        if (writer) {
+          try {
+            writer.releaseLock();
+          } catch (e) {}
+          writer = null;
+        }
+        if (port) {
+          try {
+            await port.close();
+          } catch (e) {}
+          port = null;
+        }
       } catch (e) { log("Disconnect Error: " + e.message); }
       updateConnectionState(false);
     }
@@ -1272,7 +1310,7 @@
 
     let serialReadLineBuffer = "";
 
-    async function updateWeatherFromPC() {
+    async function updateWeatherFromPC(force = false) {
       const cityVal = document.getElementById('city').value.trim();
       const apiKeyVal = document.getElementById('apikey').value.trim();
       if (!writer) return;
@@ -1281,11 +1319,13 @@
         return;
       }
 
-      const lastFetch = localStorage.getItem('lastWeatherFetchTime');
-      const now = Date.now();
-      if (lastFetch && (now - parseInt(lastFetch) < 4 * 60 * 60 * 1000)) {
-        log("Weather fetch skipped: 4-hour window has not elapsed.");
-        return;
+      if (!force) {
+        const lastFetch = localStorage.getItem('lastWeatherFetchTime');
+        const now = Date.now();
+        if (lastFetch && (now - parseInt(lastFetch) < 4 * 60 * 60 * 1000)) {
+          log("Weather fetch skipped: 4-hour window has not elapsed.");
+          return;
+        }
       }
 
       log(`PC fetching weather for ${cityVal}...`);
@@ -1468,12 +1508,30 @@
       }
     }
 
-    async function sendRaw(cmd) {
-      if (!writer) return;
-      const encoder = new TextEncoder();
+    async function processWriteQueue() {
+      if (isWriting || writeQueue.length === 0) return;
+      isWriting = true;
+      const { cmd, resolve, reject } = writeQueue.shift();
       try {
-        await writer.write(encoder.encode(cmd + "\n"));
-      } catch (e) { log("Write Error: " + e.message); }
+        if (writer) {
+          const encoder = new TextEncoder();
+          await writer.write(encoder.encode(cmd + "\n"));
+        }
+        resolve();
+      } catch (e) {
+        log("Write Error: " + e.message);
+        reject(e);
+      } finally {
+        isWriting = false;
+        setTimeout(processWriteQueue, 10);
+      }
+    }
+
+    function sendRaw(cmd) {
+      return new Promise((resolve, reject) => {
+        writeQueue.push({ cmd, resolve, reject });
+        processWriteQueue();
+      });
     }
     function send(k, v) { sendRaw(`${k}:${v}`); }
     function sendCmd(cmd) { sendRaw(cmd); }
@@ -1504,13 +1562,18 @@
       log("Saving WiFi credentials and rebooting device...");
     }
 
-    function saveAll() {
+    async function saveAll() {
+      // Fetch and send weather updates first
+      await updateWeatherFromPC(true);
+
       setTimeout(() => setAlarm(), 500);
       setTimeout(() => send('TIMER_SET', document.getElementById('tmr').value), 600);
       setTimeout(() => send('CLOCK_FACE', document.getElementById('clkFace').value), 650);
       setTimeout(() => send('TIME_24H', document.getElementById('time24').checked ? 1 : 0), 680);
       setTimeout(() => send('SS_TIMEOUT', document.getElementById('ss_timeout').value), 690);
       setTimeout(() => send('SET_TZ', document.getElementById('tz_off').value), 710);
+      setTimeout(() => send('CITY', document.getElementById('city').value), 720);
+      setTimeout(() => send('APIKEY', document.getElementById('apikey').value), 730);
 
       setTimeout(() => send('DISP', document.getElementById('display_type').value), 900);
       setTimeout(() => send('SDA', document.getElementById('sda_pin').value), 1000);
