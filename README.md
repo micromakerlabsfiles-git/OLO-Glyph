@@ -9,7 +9,8 @@ This document covers hardware assembly, software installation, and how to utiliz
 
 ## 🚀 Key Features in OLO Glyph V1
 
-- **🔌 Fully Offline (No BLE / No WiFi):** Radio modules are completely disabled to save power, minimize interference, and make the device 100% offline. All interactions and configurations sync instantly via Web Serial.
+- **🌐 WiFi Connectivity & Local Dashboard:** The device connects to local WiFi (credentials stored in NVS, toggled ON/OFF dynamically on-screen). When active, it hosts a premium, local HTTP dashboard directly from program flash (PROGMEM) at `http://ologlyph.local/` for password-secured remote control over your local network. It also supports USB Web Serial sync.
+- **📡 On-Device WiFi Status Page (PAGE 11):** Displays active connection state, dynamically assigned IP address, and supports double-tap to toggle the WiFi transceiver ON/OFF.
 - **✨ Premium U8g2 Fonts:** Both the boot sequence and the Glyph mode render using high-resolution, elegantly centered fonts (`helvB14`, `helvB10`, etc.).
 - **🖼️ Outer Rounded OLED Borders:** Elegant `0,0,128,64` rounded borders are drawn around the Clock, Weather, and Glyph screens. Inner layouts automatically adapt to stay inside these borders.
 - **⚡ Non-Blocking Alarm System:** The alarm sound uses a non-blocking state machine (`updateAlarmAudio()`) powered by `millis()`. The device's touch sensor and screen updates remain 100% responsive and lag-free even while the alarm is ringing.
@@ -81,8 +82,8 @@ We have simplified the Clock mode submenu navigation to be consistent and intuit
 Page rotation behavior in OLO Glyph V1 is split into two systems for optimized user control:
 1. **Screensaver Timeout (Default 10s, configurable down to 5s safety floor):** If the touch sensor is not interacted with for the screensaver timeout duration, the display automatically transitions back to the **Eyes screensaver (Page 0)** and resets the sub-menu state. This automatic switch is paused if Glyph Mode is locked (`continuousGlyphMode`), the Stopwatch is active, or the Timer is counting down.
 2. **Manual Tap Navigation:** When awake, manual navigation is done via single taps in the following cycle order:
-   `Glyph Mode (7) -> Time (1) -> Weather (2) -> LED Status (10) -> Eyes Screensaver (0) -> Glyph Mode (7)`
-   Any touch activity resets the screensaver timeout. Toggling features or entering sub-menus occurs via double-tap (e.g. toggling LED status on Page 10, entering sub-menus from Clock on Page 1, or toggling Sleep mode on the Eyes screensaver Page 0).
+   `Glyph Mode (7) -> Time (1) -> Weather (2) -> LED Status (10) -> WiFi Status (11) -> Eyes Screensaver (0) -> Glyph Mode (7)`
+   Any touch activity resets the screensaver timeout. Toggling features or entering sub-menus occurs via double-tap (e.g. toggling LED status on Page 10, toggling WiFi radio on Page 11, entering sub-menus from Clock on Page 1, or toggling Sleep mode on the Eyes screensaver Page 0).
 
 ---
 

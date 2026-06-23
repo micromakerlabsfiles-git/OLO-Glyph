@@ -39,13 +39,7 @@
       overflow-x: hidden;
     }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    .brand-title {
+    h1, h2, h3, h4, h5, h6, .brand-title {
       font-family: 'Outfit', sans-serif;
       font-weight: 700;
     }
@@ -109,8 +103,7 @@
     }
 
     /* --- BUTTONS --- */
-    button,
-    .btn {
+    button, .btn {
       border-radius: 10px;
       font-weight: 600;
       padding: 10px 18px;
@@ -119,61 +112,52 @@
       cursor: pointer;
     }
 
-    .btn-primary,
-    button.btn-primary {
+    .btn-primary, button.btn-primary {
       background: linear-gradient(135deg, #ff793f, #ff5252);
       color: white;
       box-shadow: 0 4px 15px var(--accent-glow);
     }
 
-    .btn-primary:hover,
-    button.btn-primary:hover {
+    .btn-primary:hover, button.btn-primary:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(255, 121, 63, 0.5);
       opacity: 0.95;
     }
 
-    .btn-success,
-    button.btn-success {
+    .btn-success, button.btn-success {
       background: linear-gradient(135deg, #2ed573, #26c281);
       color: white;
       box-shadow: 0 4px 15px var(--success-glow);
     }
 
-    .btn-success:hover,
-    button.btn-success:hover {
+    .btn-success:hover, button.btn-success:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(46, 213, 115, 0.45);
     }
 
-    .btn-secondary,
-    button.btn-secondary {
+    .btn-secondary, button.btn-secondary {
       background: rgba(255, 255, 255, 0.08);
       color: #fff;
       border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    .btn-secondary:hover,
-    button.btn-secondary:hover {
+    .btn-secondary:hover, button.btn-secondary:hover {
       background: rgba(255, 255, 255, 0.15);
       transform: translateY(-2px);
     }
 
-    .btn-danger,
-    button.btn-danger {
+    .btn-danger, button.btn-danger {
       background: linear-gradient(135deg, #ff4757, #ff6b81);
       color: white;
     }
 
-    .btn-danger:hover,
-    button.btn-danger:hover {
+    .btn-danger:hover, button.btn-danger:hover {
       transform: translateY(-2px);
       box-shadow: 0 4px 15px rgba(255, 71, 87, 0.35);
     }
 
     /* --- FORMS & INPUTS --- */
-    input,
-    select {
+    input, select {
       background: rgba(0, 0, 0, 0.3);
       border: 1px solid rgba(255, 255, 255, 0.12);
       color: white;
@@ -184,8 +168,7 @@
       transition: all 0.2s ease;
     }
 
-    input:focus,
-    select:focus {
+    input:focus, select:focus {
       border-color: var(--accent);
       outline: none;
       box-shadow: 0 0 0 3px var(--accent-glow);
@@ -276,17 +259,9 @@
     }
 
     @keyframes pulse {
-      0% {
-        opacity: 0.6;
-      }
-
-      50% {
-        opacity: 1;
-      }
-
-      100% {
-        opacity: 0.6;
-      }
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
     }
 
     /* --- CONSOLE LOG --- */
@@ -374,13 +349,6 @@
       font-size: 0.85rem;
     }
 
-    /* --- WEDFLASHER STYLING --- */
-    esp-web-install-button {
-      --esp-tools-button-color: linear-gradient(135deg, #ff793f, #ff5252);
-      --esp-tools-button-border-radius: 10px;
-      --esp-tools-button-font-weight: 600;
-    }
-
     /* Custom card layouts */
     .config-card {
       background: rgba(255, 255, 255, 0.02);
@@ -398,6 +366,13 @@
       display: flex;
       align-items: center;
       gap: 8px;
+    }
+
+    /* --- WEBFLASHER STYLING --- */
+    esp-web-install-button {
+      --esp-tools-button-color: linear-gradient(135deg, #ff793f, #ff5252);
+      --esp-tools-button-border-radius: 10px;
+      --esp-tools-button-font-weight: 600;
     }
 
     /* --- FLASHING STATE BLUR --- */
@@ -440,8 +415,7 @@
 
   <!-- Exit flashing overlay button -->
   <div id="flasher-exit-container" style="display: none; position: fixed; top: 20px; right: 20px; z-index: 1000000;">
-    <button class="btn btn-primary" onclick="exitFlashingMode()"><i class="fas fa-arrow-left me-2"></i> Return to
-      Dashboard</button>
+    <button class="btn btn-primary" onclick="exitFlashingMode()"><i class="fas fa-arrow-left me-2"></i> Return to Dashboard</button>
   </div>
 
   <!-- Hidden Root Level Web Flasher to avoid CSS Stacking Context clips -->
@@ -459,13 +433,14 @@
           <i class="fas fa-layer-group brand-logo"></i>
           <div class="d-flex flex-column">
             <span class="brand-title">OLO GLYPH</span>
-            <span class="xsmall text-muted" style="font-size:0.75rem; letter-spacing:0.5px;">SYSTEM PANEL</span>
+            <span class="small text-muted">Web Control Center v1.0</span>
           </div>
         </div>
 
-        <!-- Connection Status -->
-        <div class="mb-4 text-center">
-          <div id="status-badge" class="status-badge">
+        <!-- Connection State Indicator -->
+        <div class="mb-4">
+          <label>Hardware Connection State</label>
+          <div id="connection-status" class="status-badge">
             <span class="status-dot"></span>
             <span id="status-text">Disconnected</span>
           </div>
@@ -496,15 +471,12 @@
           </button>
         </div>
 
-
         <!-- Firmware Flash Utility Card -->
         <div class="config-card mb-4 mt-auto">
           <span class="config-card-title"><i class="fas fa-bolt text-warning"></i> Firmware Installer</span>
-          <p class="small text-muted mb-3" style="font-size:0.8rem; line-height: 1.4;">Flash the factory binary directly
-            over USB in Chrome/Edge.</p>
+          <p class="small text-muted mb-3" style="font-size:0.8rem; line-height: 1.4;">Flash the factory binary directly over USB in Chrome/Edge.</p>
           <div class="d-grid">
-            <button class="btn btn-secondary w-100" onclick="triggerFirmwareFlash()"
-              style="font-size: 0.85rem; padding: 8px 12px;">
+            <button class="btn btn-secondary w-100" onclick="triggerFirmwareFlash()" style="font-size: 0.85rem; padding: 8px 12px;">
               <i class="fas fa-microchip me-1"></i> Flash Firmware
             </button>
           </div>
@@ -549,10 +521,8 @@
           <i class="fas fa-plug-circle-exclamation text-warning mb-4"
             style="font-size: 3.2rem; filter: drop-shadow(0 0 15px rgba(255,121,63,0.3));"></i>
           <h4 class="mb-2">OLO Glyph Offline</h4>
-          <p class="text-muted small mb-4" style="line-height:1.5;">Configure parameters and send direct commands to the
-            screen. To activate this dashboard, connect your hardware over serial.</p>
-          <button class="btn btn-primary" onclick="startConnection()"><i class="fas fa-plug me-2"></i> Connect
-            Device</button>
+          <p class="text-muted small mb-4" style="line-height:1.5;">Configure parameters and send direct commands to the screen. To activate this dashboard, connect your hardware over serial.</p>
+          <button class="btn btn-primary" onclick="startConnection()"><i class="fas fa-plug me-2"></i> Connect Device</button>
         </div>
       </div>
 
@@ -560,22 +530,14 @@
       <div class="glass-panel">
         <!-- Nav Tabs -->
         <ul class="nav nav-tabs" id="myTab" role="tablist">
-          <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-target="#live">🎮 Live
-              Control</button></li>
-          <li class="nav-item" role="presentation"><button class="nav-link" data-bs-target="#eyes">👁️ Eye
-              Physics</button></li>
-          <li class="nav-item" role="presentation"><button class="nav-link" data-bs-target="#time">⏰ Clock &
-              Alarms</button></li>
-          <li class="nav-item" role="presentation"><button class="nav-link" data-bs-target="#Glyph">🎨 Glyph
-              Mode</button></li>
-          <li class="nav-item" role="presentation"><button class="nav-link" data-bs-target="#network">🌐 Weather
-              Setup</button></li>
-          <li class="nav-item" role="presentation"><button class="nav-link" data-bs-target="#hardware">⚙️
-              Hardware</button></li>
-          <li class="nav-item" role="presentation"><button class="nav-link" data-bs-target="#led">💡 LED
-              Lighting</button></li>
+          <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#live">🎮 Live Control</button></li>
+          <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#eyes">👁️ Eye Physics</button></li>
+          <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#time">⏰ Clock & Alarms</button></li>
+          <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#Glyph">🎨 Glyph Mode</button></li>
+          <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#network">🌐 Weather & WiFi</button></li>
+          <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#hardware">⚙️ Hardware</button></li>
+          <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#led">💡 LED Lighting</button></li>
         </ul>
-
 
         <!-- Tab Contents -->
         <div class="tab-content" id="myTabContent">
@@ -585,225 +547,250 @@
             <div class="row">
               <div class="col-md-6 mb-4">
                 <div class="config-card h-100">
-                  <span class="config-card-title"><i class="fas fa-tv text-accent"></i> Display Navigation</span>
-                  <label>Force Screen Page</label>
-                  <select id="page" onchange="send('PAGE', this.value)">
-                    <option value="0">Eyes (Normal)</option>
-                    <option value="1">Clock Face</option>
-                    <option value="2">Weather Info</option>
-                    <option value="3">World Clock</option>
-                    <option value="4">3-Day Forecast</option>
-                    <option value="5">Alarm View</option>
-                    <option value="6">Alarm Set</option>
-                    <option value="7">Glyph Mode</option>
-                    <option value="8">Countdown Timer</option>
-                    <option value="9">Stopwatch Mode</option>
-                    <option value="10">LED Status Screen</option>
+                  <span class="config-card-title"><i class="fas fa-face-smile text-warning"></i> Quick Mood Control</span>
+                  <label>Current Mood Override</label>
+                  <select id="mood" onchange="send('MOOD', this.value)">
+                    <option value="0">Normal</option>
+                    <option value="1">Happy</option>
+                    <option value="2">Focused</option>
+                    <option value="3">Sleeping</option>
+                    <option value="4">Sad</option>
+                    <option value="5">Angry</option>
+                    <option value="6">In Love</option>
+                    <option value="7">Suspicious</option>
                   </select>
-
-
-                  <div class="slider-group mt-3">
-                    <div class="slider-header">
-                      <label class="m-0">Contrast Brightness</label>
-                      <span id="brVal" class="slider-val">255</span>
-                    </div>
-                    <input type="range" class="form-range" min="1" max="255" value="255" id="br"
-                      oninput="document.getElementById('brVal').innerText=this.value"
-                      onchange="send('BRIGHT', this.value)">
-                  </div>
-
-                  <div class="slider-group mt-3">
-                    <div class="slider-header">
-                      <label class="m-0">Screensaver Timeout (seconds)</label>
-                      <span id="ssVal" class="slider-val">10</span>
-                    </div>
-                    <input type="range" class="form-range" min="1" max="60" value="10" id="ss_timeout"
-                      oninput="document.getElementById('ssVal').innerText=this.value"
-                      onchange="send('SS_TIMEOUT', this.value)">
-                  </div>
+                  <button class="btn btn-secondary w-100 mt-2" onclick="sendCmd('BLINK')">
+                    <i class="fas fa-eye me-2"></i> Force Blink Animation
+                  </button>
                 </div>
               </div>
 
               <div class="col-md-6 mb-4">
                 <div class="config-card h-100">
-                  <span class="config-card-title"><i class="fas fa-terminal text-info"></i> Diagnostic Triggers</span>
-                  <button class="btn btn-primary w-100 mb-3" onclick="sendCmd('BLINK')"><i class="fas fa-eye me-2"></i>
-                    Trigger Eye Blink</button>
+                  <span class="config-card-title"><i class="fas fa-display text-primary"></i> Manual Page Jumps</span>
+                  <label>Jump to Screen Page</label>
+                  <select id="page" onchange="send('PAGE', this.value)">
+                    <option value="0">Live Eyes</option>
+                    <option value="1">Clock (Primary Face)</option>
+                    <option value="2">Local Weather Pane</option>
+                    <option value="3">Secondary World Clock</option>
+                    <option value="4">Three-Day Forecast</option>
+                    <option value="5">Alarm Config View</option>
+                    <option value="8">Countdown Timer</option>
+                    <option value="9">Stopwatch Utility</option>
+                    <option value="10">LED Settings Page</option>
+                    <option value="11">WiFi Settings Page</option>
+                  </select>
 
-                  <hr class="border-secondary my-3">
-
-                  <label>Boot Banner Line 1</label>
-                  <input id="bt1" value="Booting">
-                  <label>Boot Banner Line 2</label>
-                  <input id="bt2" value="OLO Glyph">
+                  <label class="mt-3">Display Brightness (Contrast)</label>
+                  <div class="slider-group">
+                    <div class="slider-header">
+                      <label class="small text-muted">Contrast</label>
+                      <span class="slider-val" id="brVal">255</span>
+                    </div>
+                    <input type="range" class="w-100 form-range" id="br" min="1" max="255" value="255" oninput="document.getElementById('brVal').innerText=this.value; send('BR', this.value)">
+                  </div>
                 </div>
               </div>
-
             </div>
           </div>
 
-          <!-- EYE PHYSICS TAB -->
+          <!-- EYES SETTINGS TAB -->
           <div class="tab-pane fade" id="eyes" role="tabpanel">
             <div class="row">
               <div class="col-md-6 mb-4">
-                <div class="config-card h-100">
-                  <span class="config-card-title"><i class="fas fa-arrows-to-eye text-primary"></i> Pupil
-                    Positioning</span>
-
+                <div class="config-card">
+                  <span class="config-card-title"><i class="fas fa-eye text-primary"></i> Eye Physical Dimensions</span>
+                  
                   <div class="slider-group">
                     <div class="slider-header">
-                      <label class="m-0">Pupil Look Horizontal (X)</label>
-                      <span id="pxVal" class="slider-val">0</span>
+                      <label class="small text-white">Width Scale</label>
+                      <span class="slider-val" id="ewVal">36</span>
                     </div>
-                    <input type="range" class="form-range" min="-10" max="10" value="0" id="px"
-                      oninput="document.getElementById('pxVal').innerText=this.value; updateEye()">
+                    <input type="range" class="w-100 form-range" id="ew" min="10" max="60" value="36" oninput="document.getElementById('ewVal').innerText=this.value; updateEyeSize()">
                   </div>
 
                   <div class="slider-group">
                     <div class="slider-header">
-                      <label class="m-0">Pupil Look Vertical (Y)</label>
-                      <span id="pyVal" class="slider-val">0</span>
+                      <label class="small text-white">Height Scale</label>
+                      <span class="slider-val" id="ehVal">36</span>
                     </div>
-                    <input type="range" class="form-range" min="-10" max="10" value="0" id="py"
-                      oninput="document.getElementById('pyVal').innerText=this.value; updateEye()">
+                    <input type="range" class="w-100 form-range" id="eh" min="10" max="60" value="36" oninput="document.getElementById('ehVal').innerText=this.value; updateEyeSize()">
                   </div>
 
-                  <hr class="border-secondary my-3">
-                  <span class="config-card-title"><i class="fas fa-arrows-alt text-info"></i> Eye Base Spacing</span>
-
-                  <div class="slider-group">
+                  <div class="slider-group mb-0">
                     <div class="slider-header">
-                      <label class="m-0">Offset Center X</label>
-                      <span id="exVal" class="slider-val">0</span>
+                      <label class="small text-white">Corner Corner Radius</label>
+                      <span class="slider-val" id="erVal">8</span>
                     </div>
-                    <input type="range" class="form-range" min="-10" max="10" value="0" id="ex"
-                      oninput="document.getElementById('exVal').innerText=this.value; updateEyePos()">
-                  </div>
-
-                  <div class="slider-group">
-                    <div class="slider-header">
-                      <label class="m-0">Offset Center Y</label>
-                      <span id="eyVal" class="slider-val">0</span>
-                    </div>
-                    <input type="range" class="form-range" min="-10" max="10" value="0" id="ey"
-                      oninput="document.getElementById('eyVal').innerText=this.value; updateEyePos()">
+                    <input type="range" class="w-100 form-range" id="er" min="0" max="20" value="8" oninput="document.getElementById('erVal').innerText=this.value; updateEyeRadius()">
                   </div>
                 </div>
               </div>
 
               <div class="col-md-6 mb-4">
-                <div class="config-card h-100">
-                  <span class="config-card-title"><i class="fas fa-expand text-success"></i> Eyelid Scaling &
-                    Shape</span>
-
-                  <div class="slider-group">
-                    <div class="slider-header">
-                      <label class="m-0">Eye Width (W)</label>
-                      <span id="ewVal" class="slider-val">36</span>
+                <div class="config-card d-flex flex-column h-100 justify-content-between">
+                  <div>
+                    <span class="config-card-title"><i class="fas fa-arrows-to-dot text-accent"></i> Position Offsets</span>
+                    
+                    <div class="slider-group">
+                      <div class="slider-header">
+                        <label class="small text-white">Horizontal Offset (X)</label>
+                        <span class="slider-val" id="exVal">0</span>
+                      </div>
+                      <input type="range" class="w-100 form-range" id="ex" min="-12" max="12" value="0" oninput="document.getElementById('exVal').innerText=this.value; updateEyePos()">
                     </div>
-                    <input type="range" class="form-range" min="10" max="60" value="36" id="ew"
-                      oninput="document.getElementById('ewVal').innerText=this.value; updateEyeSize()">
+
+                    <div class="slider-group mb-0">
+                      <div class="slider-header">
+                        <label class="small text-white">Vertical Offset (Y)</label>
+                        <span class="slider-val" id="eyVal">0</span>
+                      </div>
+                      <input type="range" class="w-100 form-range" id="ey" min="-8" max="8" value="0" oninput="document.getElementById('eyVal').innerText=this.value; updateEyePos()">
+                    </div>
                   </div>
 
-                  <div class="slider-group">
-                    <div class="slider-header">
-                      <label class="m-0">Eye Height (H)</label>
-                      <span id="ehVal" class="slider-val">36</span>
-                    </div>
-                    <input type="range" class="form-range" min="10" max="60" value="36" id="eh"
-                      oninput="document.getElementById('ehVal').innerText=this.value; updateEyeSize()">
+                  <div class="d-flex gap-2 mt-4">
+                    <button class="btn btn-success flex-grow-1" onclick="saveEyes()"><i class="fas fa-check me-2"></i> Save Shape</button>
+                    <button class="btn btn-secondary" onclick="resetEyes()"><i class="fas fa-rotate-left me-2"></i> Reset</button>
                   </div>
+                </div>
+              </div>
+            </div>
 
-                  <div class="slider-group">
+            <!-- MANUAL EYE Gaze OVERRIDE -->
+            <div class="config-card">
+              <span class="config-card-title"><i class="fas fa-arrows-up-down-left-right text-success"></i> Gaze Direction Override</span>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <div class="slider-group mb-0">
                     <div class="slider-header">
-                      <label class="m-0">Corner Radius (Roundness)</label>
-                      <span id="erVal" class="slider-val">8</span>
+                      <label class="small text-white">Pupil Horizontal Offset (X)</label>
+                      <span class="slider-val" id="pxVal">0</span>
                     </div>
-                    <input type="range" class="form-range" min="0" max="20" value="8" id="er"
-                      oninput="document.getElementById('erVal').innerText=this.value; updateEyeRadius()">
+                    <input type="range" class="w-100 form-range" id="px" min="-8" max="8" value="0" oninput="document.getElementById('pxVal').innerText=this.value; updateEye()">
                   </div>
-
-                  <div class="d-flex gap-2 mt-4 pt-2">
-                    <button class="btn btn-success w-100" onclick="saveEyes()"><i class="fas fa-save me-2"></i> Save
-                      Shape</button>
-                    <button class="btn btn-secondary w-100" onclick="resetEyes()"><i class="fas fa-undo me-2"></i> Reset
-                      Default</button>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="slider-group mb-0">
+                    <div class="slider-header">
+                      <label class="small text-white">Pupil Vertical Offset (Y)</label>
+                      <span class="slider-val" id="pyVal">0</span>
+                    </div>
+                    <input type="range" class="w-100 form-range" id="py" min="-6" max="6" value="0" oninput="document.getElementById('pyVal').innerText=this.value; updateEye()">
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- CLOCK & ALARMS TAB -->
+          <!-- TIME SETTINGS TAB -->
           <div class="tab-pane fade" id="time" role="tabpanel">
             <div class="row">
               <div class="col-md-6 mb-4">
                 <div class="config-card h-100">
-                  <span class="config-card-title"><i class="fas fa-bell text-accent"></i> Daily Alarm Config</span>
+                  <span class="config-card-title"><i class="fas fa-clock text-primary"></i> Alarm Configurations</span>
+                  <div class="row">
+                    <div class="col-6 mb-3">
+                      <label>Hour (0-23)</label>
+                      <input type="number" id="aH" min="0" max="23" value="7">
+                    </div>
+                    <div class="col-6 mb-3">
+                      <label>Minute (0-59)</label>
+                      <input type="number" id="aM" min="0" max="59" value="0">
+                    </div>
+                  </div>
                   <div class="form-check form-switch mb-3">
                     <input class="form-check-input" type="checkbox" id="aOn">
-                    <label class="form-check-label text-white" for="aOn">Enable Daily Alarm</label>
+                    <label class="form-check-label text-white" for="aOn">Enable Daily Alarm Ring</label>
                   </div>
-                  <div class="row g-2">
-                    <div class="col-6">
-                      <label>Alarm Hour</label>
-                      <input type="number" id="aH" placeholder="HH (0-23)" min="0" max="23">
-                    </div>
-                    <div class="col-6">
-                      <label>Alarm Minute</label>
-                      <input type="number" id="aM" placeholder="MM (0-59)" min="0" max="59">
-                    </div>
-                  </div>
+
+                  <hr class="border-secondary my-3">
+
+                  <span class="config-card-title"><i class="fas fa-hourglass-half text-accent"></i> Timer Duration</span>
+                  <label>Countdown Period (Minutes)</label>
+                  <input type="number" id="tmr" min="1" max="120" value="10">
                 </div>
               </div>
 
               <div class="col-md-6 mb-4">
                 <div class="config-card h-100">
-                  <span class="config-card-title"><i class="fas fa-hourglass-half text-info"></i> Countdown Timer</span>
-                  <label>Timer Duration (Minutes)</label>
-                  <input type="number" id="tmr" value="10" placeholder="e.g. 10">
-                </div>
-              </div>
-
-              <div class="col-md-6 mb-4">
-                <div class="config-card h-100">
-                  <span class="config-card-title"><i class="fas fa-clock text-warning"></i> Clock Face Layout</span>
-                  <label>Select Face Style</label>
-                  <select id="clkFace" onchange="send('CLOCK_FACE', this.value)">
-                    <option value="0">Classic Digital</option>
-                    <option value="1">Minimalist (Large Center)</option>
-                    <option value="2">Retro Boxed</option>
-                    <option value="3">Vertical Stacked</option>
-                    <option value="4">Active Seconds Bar</option>
-                    <option value="5">Giant Seconds</option>
-                    <option value="6">24-Hour Military Format</option>
-                    <option value="7">Minimalist with Seconds</option>
-                    <option value="8">Time & Mood</option>
-                    <option value="9">Split Screen (Sidebar Date)</option>
-                    <option value="10">Analog Face (Seconds)</option>
-                    <option value="11">Casio Watch Style</option>
-                    <option value="12">Freedoom R25 Font</option>
+                  <span class="config-card-title"><i class="fas fa-hourglass-start text-warning"></i> Screen Layout Styles</span>
+                  <label>Clock Face Layout</label>
+                  <select id="clkFace">
+                    <option value="0">Classic Simple Digital</option>
+                    <option value="1">Modern Centered Bold</option>
+                    <option value="2">Minimalist Two-Lines Layout</option>
                   </select>
-                  <div class="form-check form-switch mt-3 mb-0">
-                    <input class="form-check-input" type="checkbox" id="time24" onchange="send('TIME_24H', this.checked ? 1 : 0)">
-                    <label class="form-check-label text-white" for="time24">Use 24-Hour Format</label>
+
+                  <div class="form-check form-switch mb-4">
+                    <input class="form-check-input" type="checkbox" id="time24">
+                    <label class="form-check-label text-white" for="time24">24-Hour Time Format</label>
+                  </div>
+
+                  <label>Timezone Offset</label>
+                  <select id="tz_off" onchange="send('SET_TZ', this.value)">
+                    <option value="-43200">UTC-12:00 (Kwajalein)</option>
+                    <option value="-39600">UTC-11:00 (Samoa)</option>
+                    <option value="-36000">UTC-10:00 (Hawaii)</option>
+                    <option value="-32400">UTC-09:00 (Alaska)</option>
+                    <option value="-28800">UTC-08:00 (Pacific Time)</option>
+                    <option value="-25200">UTC-07:00 (Mountain Time)</option>
+                    <option value="-21600">UTC-06:00 (Central Time)</option>
+                    <option value="-18000">UTC-05:00 (Eastern Time)</option>
+                    <option value="-14400">UTC-04:00 (Atlantic Time)</option>
+                    <option value="-12600">UTC-03:30 (Newfoundland)</option>
+                    <option value="-10800">UTC-03:00 (Buenos Aires)</option>
+                    <option value="-7200">UTC-02:00 (Mid-Atlantic)</option>
+                    <option value="-3600">UTC-01:00 (Azores)</option>
+                    <option value="0">UTC+00:00 (London/GMT)</option>
+                    <option value="3600">UTC+01:00 (Paris/CET)</option>
+                    <option value="7200">UTC+02:00 (Athens/EET)</option>
+                    <option value="10800">UTC+03:00 (Moscow/MSK)</option>
+                    <option value="12600">UTC+03:30 (Tehran)</option>
+                    <option value="14400">UTC+04:00 (Dubai)</option>
+                    <option value="16200">UTC+04:30 (Kabul)</option>
+                    <option value="18000">UTC+05:00 (Karachi)</option>
+                    <option value="19800" selected>UTC+05:30 (New Delhi/IST)</option>
+                    <option value="20700">UTC+05:45 (Kathmandu)</option>
+                    <option value="21600">UTC+06:00 (Dhaka)</option>
+                    <option value="23400">UTC+06:30 (Yangon)</option>
+                    <option value="25200">UTC+07:00 (Bangkok)</option>
+                    <option value="28800">UTC+08:00 (Beijing/SST)</option>
+                    <option value="31500">UTC+08:45 (Eucla)</option>
+                    <option value="32400">UTC+09:00 (Tokyo/KST)</option>
+                    <option value="34200">UTC+09:30 (Adelaide)</option>
+                    <option value="36000">UTC+10:00 (Sydney/AEST)</option>
+                    <option value="37800">UTC+10:30 (Lord Howe)</option>
+                    <option value="39600">UTC+11:00 (Solomon Islands)</option>
+                    <option value="43200">UTC+12:00 (Auckland)</option>
+                    <option value="46800">UTC+13:00 (Tonga)</option>
+                    <option value="50400">UTC+14:00 (Kiritimati)</option>
+                  </select>
+
+                  <label class="mt-3">Screensaver Timeout (Seconds)</label>
+                  <div class="slider-group">
+                    <div class="slider-header">
+                      <label class="small text-muted">Timeout (Seconds)</label>
+                      <span class="slider-val" id="ssVal">10</span>
+                    </div>
+                    <input type="range" class="w-100 form-range" id="ss_timeout" min="5" max="300" value="10" oninput="document.getElementById('ssVal').innerText=this.value">
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div class="col-12">
-                <div class="config-card">
-                  <span class="config-card-title"><i class="fas fa-globe text-primary"></i> World Clock Timezones</span>
-                  <div class="row">
-                    <div class="col-md-6 mb-2">
-                      <label>Zone 1 (Left Display Pane)</label>
-                      <select id="tz1"></select>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                      <label>Zone 2 (Right Display Pane)</label>
-                      <select id="tz2"></select>
-                    </div>
-                  </div>
+            <!-- WORLD CLOCK SUB-PANEL -->
+            <div class="config-card">
+              <span class="config-card-title"><i class="fas fa-earth-americas text-success"></i> Dual World Clock Selection</span>
+              <div class="row">
+                <div class="col-md-6 mb-2">
+                  <label>Zone 1 (Left Display Pane)</label>
+                  <select id="tz1"></select>
+                </div>
+                <div class="col-md-6 mb-2">
+                  <label>Zone 2 (Right Display Pane)</label>
+                  <select id="tz2"></select>
                 </div>
               </div>
             </div>
@@ -814,8 +801,7 @@
             <div class="row">
               <div class="col-md-6 mb-4">
                 <div class="config-card h-100">
-                  <span class="config-card-title"><i class="fas fa-quote-left text-accent"></i> Glyph Text
-                    Content</span>
+                  <span class="config-card-title"><i class="fas fa-quote-left text-accent"></i> Glyph Text Content</span>
                   <label>Custom Text String</label>
                   <input id="cTxt" value="Hello!">
 
@@ -833,23 +819,10 @@
                     <option value="In a Sync">In a Sync</option>
                     <option value="Reviewing PRs">Reviewing PRs</option>
                     <option value="Standup Mode">Standup Mode</option>
-                    <option value="Designing System">Designing System</option>
                     <option value="Coffee Break">Coffee Break</option>
-                    <option value="Debugging Prod">Debugging Prod</option>
-                    <option value="Brainstorming">Brainstorming</option>
-                    <option value="Writing Docs">Writing Docs</option>
-                    <option value="Testing Release">Testing Release</option>
                     <option value="Away from Desk">Away from Desk</option>
-                    <option value="Weekly Sync">Weekly Sync</option>
-                    <option value="Sprint Planning">Sprint Planning</option>
-                    <option value="Demos in Progress">Demos in Progress</option>
-                    <option value="Server Maintenance">Server Maintenance</option>
-                    <option value="HR Meeting">HR Meeting</option>
-                    <option value="1-on-1 Chat">1-on-1 Chat</option>
-                    <option value="Headphones On">Headphones On</option>
                   </select>
-                  <small class="text-muted" style="font-size:0.75rem; line-height:1.4;">Text automatically downscales
-                    its font to fit screen parameters when sent.</small>
+                  <small class="text-muted" style="font-size:0.75rem; line-height:1.4;">Text automatically downscales its font to fit screen parameters when sent.</small>
                 </div>
               </div>
 
@@ -891,32 +864,54 @@
             </div>
           </div>
 
-          <!-- WEATHER SETUP TAB -->
+          <!-- NETWORK & WEATHER TAB -->
           <div class="tab-pane fade" id="network" role="tabpanel">
-            <div class="config-card">
-              <span class="config-card-title"><i class="fas fa-cloud-sun text-accent"></i> Local Weather
-                Integration</span>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label>Target City</label>
-                  <input id="city" placeholder="e.g. London">
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label>OpenWeather API Key</label>
-                  <input id="apikey" type="password" placeholder="Insert OpenWeather Token">
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <div class="config-card h-100">
+                  <span class="config-card-title"><i class="fas fa-cloud-sun text-accent"></i> Local Weather Integration</span>
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label>Target City</label>
+                      <input id="city" placeholder="e.g. London">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label>OpenWeather API Key</label>
+                      <input id="apikey" type="password" placeholder="Insert OpenWeather Token">
+                    </div>
+                  </div>
+                  <p class="small text-muted mb-0" style="line-height:1.5;"><i class="fas fa-circle-exclamation me-1"></i> Weather data is pulled via the host browser and pushed periodically to the device cache every 4 hours while USB connection is active.</p>
                 </div>
               </div>
-              <p class="small text-muted mb-0" style="line-height:1.5;"><i class="fas fa-circle-exclamation me-1"></i>
-                Weather data is pulled via the host browser and pushed periodically to the device cache every 4 hours
-                while USB connection is active.</p>
+
+              <!-- WIFI SETUP CARD -->
+              <div class="col-md-6 mb-4">
+                <div class="config-card h-100 d-flex flex-column justify-content-between">
+                  <div>
+                    <span class="config-card-title"><i class="fas fa-wifi text-primary"></i> WiFi Network Credentials</span>
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label>SSID / Network Name</label>
+                        <input id="wf_ssid" placeholder="Enter WiFi SSID">
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label>Password</label>
+                        <input id="wf_pass" type="password" placeholder="Enter WiFi Password">
+                      </div>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary w-100 mt-3" onclick="saveWiFiSettings()">
+                    <i class="fas fa-save me-2"></i> Save Credentials & Reboot
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
           <!-- HARDWARE SETTINGS TAB -->
           <div class="tab-pane fade" id="hardware" role="tabpanel">
             <div class="config-card">
-              <span class="config-card-title"><i class="fas fa-microchip text-primary"></i> Hardware Driver
-                Options</span>
+              <span class="config-card-title"><i class="fas fa-microchip text-primary"></i> Hardware Driver Options</span>
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label>OLED Driver Chipset</label>
@@ -926,7 +921,7 @@
                   </select>
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label>Orientation Orientation</label>
+                  <label>Orientation Settings</label>
                   <select id="is_flip_mode">
                     <option value="0">Normal Orientation</option>
                     <option value="1">Rotate 180° (Flipped)</option>
@@ -966,6 +961,20 @@
                 </div>
               </div>
             </div>
+
+            <!-- SECURITY CARD -->
+            <div class="config-card mt-3">
+              <span class="config-card-title"><i class="fas fa-shield-halved text-warning"></i> Dashboard Security</span>
+              <div class="row">
+                <div class="col-md-8 mb-3">
+                  <label>Admin Password</label>
+                  <input type="password" id="admin_pwd" placeholder="Set Dashboard Password (leave blank to disable)">
+                </div>
+                <div class="col-md-4 mb-3 d-flex align-items-end">
+                  <button class="btn btn-warning w-100" onclick="saveAdminPwd()">Set Password</button>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- LED LIGHTING TAB -->
@@ -977,15 +986,13 @@
                 <div class="config-card h-100">
                   <span class="config-card-title"><i class="fas fa-lightbulb text-warning"></i> LED Power & Gamut</span>
 
-                  <div
-                    class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary">
+                  <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary">
                     <div>
                       <label class="h6 mb-0 d-block">Main LED Switch</label>
                       <span class="small text-muted">Toggle the 1-pixel WS2812B NeoPixel state</span>
                     </div>
                     <div class="form-check form-switch m-0">
-                      <input class="form-check-input" type="checkbox" id="ledO" checked
-                        onchange="toggleLedPower(this.checked)">
+                      <input class="form-check-input" type="checkbox" id="ledO" checked onchange="toggleLedPower(this.checked)">
                     </div>
                   </div>
 
@@ -994,66 +1001,43 @@
                       <label class="small text-white">Brightness</label>
                       <span class="slider-val" id="ledBVal">128</span>
                     </div>
-                    <input type="range" class="w-100" id="ledB" min="0" max="255" value="128"
-                      oninput="changeLedBrightness(this.value)">
+                    <input type="range" class="w-100 form-range" id="ledB" min="0" max="255" value="128" oninput="changeLedBrightness(this.value)">
                   </div>
 
-                  <label class="small text-white d-block mb-2">Color Gamut Quick Picks</label>
-                  <div class="d-flex flex-wrap gap-2 mb-4">
-                    <span class="color-dot" style="background:#ff0000;" onclick="pickQuickColor(255,0,0)"></span>
-                    <span class="color-dot" style="background:#ff7f00;" onclick="pickQuickColor(255,127,0)"></span>
-                    <span class="color-dot" style="background:#ffff00;" onclick="pickQuickColor(255,255,0)"></span>
-                    <span class="color-dot" style="background:#00ff00;" onclick="pickQuickColor(0,255,0)"></span>
-                    <span class="color-dot" style="background:#00ffff;" onclick="pickQuickColor(0,255,255)"></span>
-                    <span class="color-dot" style="background:#0000ff;" onclick="pickQuickColor(0,0,255)"></span>
-                    <span class="color-dot" style="background:#7f00ff;" onclick="pickQuickColor(127,0,255)"></span>
-                    <span class="color-dot" style="background:#ff00ff;" onclick="pickQuickColor(255,0,255)"></span>
-                    <span class="color-dot" style="background:#ffffff; border:1px solid #aaa;"
-                      onclick="pickQuickColor(255,255,255)"></span>
-                    <span class="color-dot" style="background:#ffe4b5;" onclick="pickQuickColor(255,228,181)"></span>
-                    <span class="color-dot" style="background:#00ff7f;" onclick="pickQuickColor(0,255,127)"></span>
-                    <span class="color-dot" style="background:#ff1493;" onclick="pickQuickColor(255,20,147)"></span>
-                  </div>
-
-                  <label class="small text-white d-block mb-1">Manual Color Gamut (HSL)</label>
+                  <label class="small text-white d-block mb-2">Color Gamut Settings</label>
                   <div class="slider-group mb-2">
                     <div class="slider-header">
                       <label class="xsmall text-muted">Hue</label>
                       <span class="slider-val" id="hueVal">30</span>
                     </div>
-                    <input type="range" class="w-100" id="hue" min="0" max="359" value="30" oninput="updateHslColor()">
+                    <input type="range" class="w-100 form-range" id="hue" min="0" max="359" value="30" oninput="updateHslColor()">
                   </div>
                   <div class="slider-group mb-2">
                     <div class="slider-header">
                       <label class="xsmall text-muted">Saturation</label>
                       <span class="slider-val" id="satVal">100%</span>
                     </div>
-                    <input type="range" class="w-100" id="sat" min="0" max="100" value="100" oninput="updateHslColor()">
+                    <input type="range" class="w-100 form-range" id="sat" min="0" max="100" value="100" oninput="updateHslColor()">
                   </div>
                   <div class="slider-group mb-3">
                     <div class="slider-header">
                       <label class="xsmall text-muted">Lightness</label>
                       <span class="slider-val" id="lightVal">50%</span>
                     </div>
-                    <input type="range" class="w-100" id="light" min="0" max="100" value="50"
-                      oninput="updateHslColor()">
+                    <input type="range" class="w-100 form-range" id="light" min="0" max="100" value="50" oninput="updateHslColor()">
                   </div>
 
                   <div class="d-flex align-items-center gap-3">
-                    <div id="color-preview"
-                      style="width:40px; height:40px; border-radius:8px; border:1px solid var(--glass-border); box-shadow:0 0 10px rgba(0,0,0,0.5);">
-                    </div>
+                    <div id="color-preview" style="width:40px; height:40px; border-radius:8px; border:1px solid var(--glass-border); box-shadow:0 0 10px rgba(0,0,0,0.5); background-color: rgb(255, 127, 0);"></div>
                     <div class="small text-muted font-monospace" id="rgb-string">rgb(255, 127, 0)</div>
                   </div>
-
                 </div>
               </div>
 
               <!-- RIGHT CARD: EFFECTS & ALERTS & MELODIES -->
               <div class="col-md-6 mb-4">
                 <div class="config-card h-100 d-flex flex-column">
-                  <span class="config-card-title"><i class="fas fa-wand-magic-sparkles text-accent"></i> Visual Effects
-                    & Melodies</span>
+                  <span class="config-card-title"><i class="fas fa-wand-magic-sparkles text-accent"></i> Visual Effects & Melodies</span>
 
                   <div class="mb-4">
                     <label class="small text-white">Active Light Effect</label>
@@ -1074,96 +1058,63 @@
                   <div class="mb-4">
                     <label class="small text-white">Clubbed Melodies (Buzzer + LED)</label>
                     <div class="d-flex flex-wrap gap-2 mt-1">
-                      <button class="btn btn-secondary btn-sm" onclick="send('LED_SONG', 0)"><i
-                          class="fas fa-play me-1"></i> Star Wars</button>
-                      <button class="btn btn-secondary btn-sm" onclick="send('LED_SONG', 1)"><i
-                          class="fas fa-play me-1"></i> Mario</button>
-                      <button class="btn btn-secondary btn-sm" onclick="send('LED_SONG', 2)"><i
-                          class="fas fa-play me-1"></i> Rickroll</button>
-                      <button class="btn btn-danger btn-sm" onclick="send('LED_SONG', -1)"><i
-                          class="fas fa-stop me-1"></i> Stop</button>
+                      <button class="btn btn-secondary btn-sm" onclick="send('LED_SONG', 0)"><i class="fas fa-play me-1"></i> Star Wars</button>
+                      <button class="btn btn-secondary btn-sm" onclick="send('LED_SONG', 1)"><i class="fas fa-play me-1"></i> Mario</button>
+                      <button class="btn btn-secondary btn-sm" onclick="send('LED_SONG', 2)"><i class="fas fa-play me-1"></i> Rickroll</button>
+                      <button class="btn btn-danger btn-sm" onclick="send('LED_SONG', -1)"><i class="fas fa-stop me-1"></i> Stop</button>
                     </div>
                   </div>
 
                   <div class="border-top border-secondary pt-3 mt-auto">
-                    <span class="config-card-title text-info mb-3 d-block"><i class="fas fa-bell"></i> Notification
-                      Special States</span>
+                    <span class="config-card-title text-info mb-3 d-block"><i class="fas fa-bell"></i> Notification Special States</span>
 
                     <div class="row g-2 mb-2">
                       <div class="col-6">
                         <label class="xsmall text-white">Hourly Chime Visual</label>
-                        <select id="chime_effect" class="form-select form-select-sm"
-                          onchange="pushNotifConfig('chime')">
+                        <select id="chime_effect" class="form-select form-select-sm" onchange="pushNotifConfig('chime')">
                           <option value="0">Static Color</option>
                           <option value="1">Breathe Pulse</option>
                           <option value="2">Rainbow Cycle</option>
                           <option value="3">Fast Blink</option>
-                          <option value="4">Heartbeat Pulse</option>
-                          <option value="5">Fade In Ramp</option>
-                          <option value="6">Glow Flicker</option>
-                          <option value="7">Sparkle Strobe</option>
-                          <option value="8">Color Breathe</option>
-                          <option value="9">Alternating Complement</option>
                         </select>
                       </div>
                       <div class="col-6">
                         <label class="xsmall text-white">Chime Color</label>
-                        <input type="color" id="chime_color"
-                          class="form-control form-control-color w-100 form-control-sm" value="#ffff00"
-                          onchange="pushNotifConfig('chime')">
+                        <input type="color" id="chime_color" class="form-control form-control-color w-100 p-1" style="height:38px;" value="#00ff00" onchange="pushNotifConfig('chime')">
                       </div>
                     </div>
 
                     <div class="row g-2 mb-2">
                       <div class="col-6">
-                        <label class="xsmall text-white">Hydration Reminder</label>
-                        <select id="water_effect" class="form-select form-select-sm"
-                          onchange="pushNotifConfig('water')">
+                        <label class="xsmall text-white">Water Alert Visual</label>
+                        <select id="water_effect" class="form-select form-select-sm" onchange="pushNotifConfig('water')">
                           <option value="0">Static Color</option>
                           <option value="1">Breathe Pulse</option>
                           <option value="2">Rainbow Cycle</option>
                           <option value="3">Fast Blink</option>
-                          <option value="4">Heartbeat Pulse</option>
-                          <option value="5">Fade In Ramp</option>
-                          <option value="6">Glow Flicker</option>
-                          <option value="7">Sparkle Strobe</option>
-                          <option value="8">Color Breathe</option>
-                          <option value="9">Alternating Complement</option>
                         </select>
                       </div>
                       <div class="col-6">
-                        <label class="xsmall text-white">Hydration Color</label>
-                        <input type="color" id="water_color"
-                          class="form-control form-control-color w-100 form-control-sm" value="#00bfff"
-                          onchange="pushNotifConfig('water')">
+                        <label class="xsmall text-white">Water Color</label>
+                        <input type="color" id="water_color" class="form-control form-control-color w-100 p-1" style="height:38px;" value="#0000ff" onchange="pushNotifConfig('water')">
                       </div>
                     </div>
 
-                    <div class="row g-2">
+                    <div class="row g-2 mb-2">
                       <div class="col-6">
-                        <label class="xsmall text-white">Alarm Ringing</label>
-                        <select id="alarm_effect" class="form-select form-select-sm"
-                          onchange="pushNotifConfig('alarm')">
+                        <label class="xsmall text-white">Alarm Alert Visual</label>
+                        <select id="alarm_effect" class="form-select form-select-sm" onchange="pushNotifConfig('alarm')">
                           <option value="0">Static Color</option>
                           <option value="1">Breathe Pulse</option>
                           <option value="2">Rainbow Cycle</option>
                           <option value="3">Fast Blink</option>
-                          <option value="4">Heartbeat Pulse</option>
-                          <option value="5">Fade In Ramp</option>
-                          <option value="6">Glow Flicker</option>
-                          <option value="7">Sparkle Strobe</option>
-                          <option value="8">Color Breathe</option>
-                          <option value="9">Alternating Complement</option>
                         </select>
                       </div>
                       <div class="col-6">
                         <label class="xsmall text-white">Alarm Color</label>
-                        <input type="color" id="alarm_color"
-                          class="form-control form-control-color w-100 form-control-sm" value="#ff0000"
-                          onchange="pushNotifConfig('alarm')">
+                        <input type="color" id="alarm_color" class="form-control form-control-color w-100 p-1" style="height:38px;" value="#ff0000" onchange="pushNotifConfig('alarm')">
                       </div>
                     </div>
-
                   </div>
 
                 </div>
@@ -1175,12 +1126,10 @@
         </div>
       </div>
 
-
-      <!-- Collapsible Diagnostics Console -->
-      <div class="glass-panel console-container">
-        <span class="config-card-title m-0 pb-2 d-block"><i class="fas fa-network-wired text-info"></i> Serial Monitor
-          Console</span>
-        <div class="log-console" id="log">Console offline. Connect device...</div>
+      <!-- SYSTEM CONSOLE -->
+      <div class="console-container">
+        <label class="small text-white mb-2">Web Serial Output Log</label>
+        <div id="log" class="log-console">Awaiting connection to OLO Glyph...</div>
       </div>
 
     </main>
@@ -1192,12 +1141,10 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content bg-dark border-secondary text-white" style="border-radius: 12px;">
         <div class="modal-header border-secondary">
-          <h5 class="modal-title" id="unsavedModalLabel"><i
-              class="fas fa-exclamation-triangle text-warning me-2"></i>Unsaved Changes</h5>
+          <h5 class="modal-title" id="unsavedModalLabel"><i class="fas fa-exclamation-triangle text-warning me-2"></i>Unsaved Changes</h5>
         </div>
         <div class="modal-body">
-          You have modified configuration parameters. Save modifications to internal device memory before navigating
-          away, or discard?
+          You have modified configuration parameters. Save modifications to internal device memory before navigating away, or discard?
         </div>
         <div class="modal-footer border-secondary">
           <button type="button" class="btn btn-secondary" id="modalCancelBtn">Cancel</button>
@@ -1227,43 +1174,41 @@
         let opt2 = document.createElement('option'); opt2.value = tz.name + "," + tz.off; opt2.text = tz.name; sel2.appendChild(opt2);
       });
     }
+
     function setZone(num) { send('Z' + num + '_SET', document.getElementById('tz' + num).value); }
+
+    function log(t) {
+      const l = document.getElementById('log');
+      l.textContent += `>> ${t}\n`;
+      l.scrollTop = l.scrollHeight;
+    }
+
+    function updateConnectionState(isConnected) {
+      const badge = document.getElementById('connection-status');
+      const text = document.getElementById('status-text');
+      if (isConnected) {
+        badge.className = "status-badge connected";
+        text.innerText = "Connected";
+        document.body.classList.remove('is-disconnected');
+        document.body.classList.add('is-connected');
+      } else {
+        badge.className = "status-badge";
+        text.innerText = "Disconnected";
+        document.body.classList.remove('is-connected');
+        document.body.classList.add('is-disconnected');
+      }
+    }
 
     let port, writer, reader;
     let timeSyncInterval, weatherSyncInterval;
 
-    function log(t) { const l = document.getElementById('log'); l.textContent += `>> ${t}\n`; l.scrollTop = l.scrollHeight; }
-
-    function updateConnectionState(isConnected) {
-      const badge = document.getElementById('status-badge');
-      const text = document.getElementById('status-text');
-      if (isConnected) {
-        document.body.classList.remove('is-disconnected');
-        document.body.classList.add('is-connected');
-        badge.classList.add('connected');
-        text.innerText = "Connected";
-        log("CONNECTED TO DEVICE");
-      } else {
-        document.body.classList.add('is-disconnected');
-        document.body.classList.remove('is-connected');
-        badge.classList.remove('connected');
-        text.innerText = "Disconnected";
-        log("DISCONNECTED FROM DEVICE");
-      }
-    }
-
-    navigator.serial.addEventListener('disconnect', (event) => {
-      if (port && event.target === port) {
-        log("Device physically disconnected.");
-        disconnect();
-      }
-    });
-
     async function startConnection() {
       try {
-        port = await navigator.serial.requestPort();
-        await connect(port);
-      } catch (e) { alert("Serial selection failed or cancelled."); }
+        log("Requesting Web Serial port access...");
+        await connect();
+      } catch (e) {
+        log("Connection Failed: " + e.message);
+      }
     }
 
     async function connect(selectedPort) {
@@ -1305,8 +1250,6 @@
       try {
         if (timeSyncInterval) { clearInterval(timeSyncInterval); timeSyncInterval = null; }
         if (weatherSyncInterval) { clearInterval(weatherSyncInterval); weatherSyncInterval = null; }
-
-        if (reader) { await reader.cancel(); reader.releaseLock(); reader = null; }
         if (writer) { writer.releaseLock(); writer = null; }
         if (port) { await port.close(); port = null; }
       } catch (e) { log("Disconnect Error: " + e.message); }
@@ -1432,6 +1375,7 @@
       if (key == "APIKEY") document.getElementById('apikey').value = val;
       if (key == "CITY") document.getElementById('city').value = val;
       if (key == "TIMER") document.getElementById('tmr').value = val;
+      if (key == "TZ_OFF") document.getElementById('tz_off').value = val;
       if (key == "SS_TIMEOUT") {
         document.getElementById('ss_timeout').value = val;
         document.getElementById('ssVal').innerText = val;
@@ -1474,6 +1418,9 @@
       if (key == "TIME_24H") document.getElementById('time24').checked = (val == "1");
       if (key == "Glyph_FONT") document.getElementById('cFnt').value = val;
       if (key == "Glyph_ANIM") document.getElementById('cAnm').value = val;
+      if (key == "WIFI_SSID") document.getElementById('wf_ssid').value = val;
+      if (key == "WIFI_PASS") document.getElementById('wf_pass').value = val;
+      if (key == "ADMIN_PWD") document.getElementById('admin_pwd').value = val;
 
       if (key.startsWith("BT")) {
         const el = document.getElementById(key.toLowerCase());
@@ -1521,7 +1468,6 @@
       }
     }
 
-
     async function sendRaw(cmd) {
       if (!writer) return;
       const encoder = new TextEncoder();
@@ -1539,43 +1485,32 @@
       send('ALARM_SET', `${h},${m},${on}`);
     }
 
-    function pushGlyph() {
-      const text = document.getElementById('cTxt').value;
-      const font = document.getElementById('cFnt').value;
-      const anim = document.getElementById('cAnm').value;
+    function saveAdminPwd() {
+      const pwd = document.getElementById('admin_pwd').value.trim();
+      send('ADMIN_PWD', pwd);
+      log("Admin password update request sent to device.");
+    }
 
-      send('Glyph_FONT', font);
-      setTimeout(() => send('Glyph_ANIM', anim), 50);
-      setTimeout(() => send('Glyph_TEXT', text), 100);
-
-      log(`PUSH DIRECT GLYPH: text="${text}", font=${font}, anim=${anim}`);
-
-      const btn = document.getElementById('pushGlyphBtn');
-      if (btn) {
-        const oldHTML = btn.innerHTML;
-        btn.innerHTML = "<i class='fas fa-check me-2'></i> Sent & Active!";
-        btn.classList.remove('btn-primary');
-        btn.classList.add('btn-success');
-        setTimeout(() => {
-          btn.innerHTML = oldHTML;
-          btn.classList.remove('btn-success');
-          btn.classList.add('btn-primary');
-        }, 2000);
+    function saveWiFiSettings() {
+      const ssid = document.getElementById('wf_ssid').value.trim();
+      const pass = document.getElementById('wf_pass').value.trim();
+      if (!ssid) {
+        alert("Please enter WiFi SSID.");
+        return;
       }
+      send('WIFI_SSID', ssid);
+      setTimeout(() => send('WIFI_PASS', pass), 200);
+      setTimeout(() => sendCmd('WIFI_SAVE'), 400);
+      log("Saving WiFi credentials and rebooting device...");
     }
 
     function saveAll() {
-      setTimeout(() => send('CITY', document.getElementById('city').value), 100);
-      setTimeout(() => send('APIKEY', document.getElementById('apikey').value), 200);
-      setTimeout(() => setZone(1), 300); setTimeout(() => setZone(2), 400);
       setTimeout(() => setAlarm(), 500);
       setTimeout(() => send('TIMER_SET', document.getElementById('tmr').value), 600);
       setTimeout(() => send('CLOCK_FACE', document.getElementById('clkFace').value), 650);
       setTimeout(() => send('TIME_24H', document.getElementById('time24').checked ? 1 : 0), 680);
       setTimeout(() => send('SS_TIMEOUT', document.getElementById('ss_timeout').value), 690);
-
-      setTimeout(() => send('BOOT1', document.getElementById('bt1').value), 700);
-      setTimeout(() => send('BOOT2', document.getElementById('bt2').value), 800);
+      setTimeout(() => send('SET_TZ', document.getElementById('tz_off').value), 710);
 
       setTimeout(() => send('DISP', document.getElementById('display_type').value), 900);
       setTimeout(() => send('SDA', document.getElementById('sda_pin').value), 1000);
@@ -1606,7 +1541,6 @@
         }
       }, 1950);
     }
-
 
     function saveEyes() {
       sendCmd('EYE_SAVE');
@@ -1767,7 +1701,6 @@
       document.getElementById('cTxt').value = val;
     }
 
-
     let flasherPollInterval = null;
     let flasherDialogWasOpened = false;
 
@@ -1851,7 +1784,6 @@
       return false;
     }
 
-
     function resetInputsToSnapshot() {
       const inputs = document.querySelectorAll('input, select');
       inputs.forEach(el => {
@@ -1865,7 +1797,6 @@
         }
       });
     }
-
 
     function initUnsavedChangesHandler() {
       unsavedModal = new bootstrap.Modal(document.getElementById('unsavedChangesModal'));
