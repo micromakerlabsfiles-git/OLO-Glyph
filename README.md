@@ -1,13 +1,13 @@
 # 🎨 OLO Glyph V2 - With Dashboard
 **Now with Beautiful U8g2 Fonts, Responsive Touch, Background Stopwatch, Non-Blocking Casio-style Beeps, and Dynamic Glyph Animations.**
 
-OLO Glyph V1 is an offline-focused character system and serial glyph display for ESP32-based devices (specifically the ESP32-C3 SuperMini). It transforms a 1.3" or 0.96" OLED screen into an interactive companion, featuring real-time weather indicators, alarms, a background stopwatch, 13 selectable clock faces (including a full-screen sweep second rectangular Analog face, retro Casio watch style, and 7 Segment font), and completely offline over Web Serial.
+OLO Glyph V2 is an offline-focused character system and serial glyph display for ESP32-based devices (specifically the ESP32-C3 SuperMini). It transforms a 1.3" or 0.96" OLED screen into an interactive companion, featuring real-time weather indicators, alarms, a background stopwatch, 13 selectable clock faces (including a full-screen sweep second rectangular Analog face, retro Casio watch style, and 7 Segment font), and completely offline over Web Serial.
 
 This document covers hardware assembly, software installation, and how to utilize the offline Web Controller.
 
 ---
 
-## 🚀 Key Features in OLO Glyph V1
+## 🚀 Key Features in OLO Glyph V2
 
 - **🌐 WiFi Connectivity & Local Dashboard:** The device connects to local WiFi (credentials stored in NVS, toggled ON/OFF dynamically on-screen). When active, it hosts a premium, local HTTP dashboard directly from program flash (PROGMEM) at `http://ologlyph.local/` for password-secured remote control over your local network. It also supports USB Web Serial sync.
 - **📡 On-Device WiFi Status Page (PAGE 11):** Displays active connection state, dynamically assigned IP address, and supports double-tap to toggle the WiFi transceiver ON/OFF.
