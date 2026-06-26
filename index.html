@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>OLO Glyph V2 Web Control Center</title>
+  <title>OLO Glyph Web Control Center</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -1017,7 +1017,25 @@
                     <input type="range" class="w-100 form-range" id="ledB" min="0" max="255" value="128" oninput="changeLedBrightness(this.value)">
                   </div>
 
-                  <label class="small text-white d-block mb-2">Color Gamut Settings</label>
+                  <label class="small text-white d-block mb-2">Color Picker & Gamut Settings</label>
+                  <div class="d-flex align-items-center gap-3 mb-3">
+                    <div style="flex-grow: 1;">
+                      <label class="xsmall text-muted mb-1">Color Palette Picker</label>
+                      <input type="color" id="ledColorPicker" class="form-control form-control-color w-100 p-1" style="height:38px; cursor: pointer; border: 1px solid var(--glass-border); border-radius: 8px; background: rgba(0,0,0,0.2);" value="#ff7f00" onchange="pickColorPicker(this.value)">
+                    </div>
+                    <div>
+                      <label class="xsmall text-muted mb-1">Presets</label>
+                      <div class="d-flex gap-1">
+                        <span class="color-dot" style="background:#ff0000;" onclick="pickQuickColor(255,0,0)"></span>
+                        <span class="color-dot" style="background:#00ff00;" onclick="pickQuickColor(0,255,0)"></span>
+                        <span class="color-dot" style="background:#0000ff;" onclick="pickQuickColor(0,0,255)"></span>
+                        <span class="color-dot" style="background:#ffff00;" onclick="pickQuickColor(255,255,0)"></span>
+                        <span class="color-dot" style="background:#ff00ff;" onclick="pickQuickColor(255,0,255)"></span>
+                        <span class="color-dot" style="background:#00ffff;" onclick="pickQuickColor(0,255,255)"></span>
+                        <span class="color-dot" style="background:#ffffff;" onclick="pickQuickColor(255,255,255)"></span>
+                      </div>
+                    </div>
+                  </div>
                   <div class="slider-group mb-2">
                     <div class="slider-header">
                       <label class="xsmall text-muted">Hue</label>
@@ -1453,11 +1471,11 @@
       if (key == "SDA") document.getElementById('sda_pin').value = val;
       if (key == "SCL") document.getElementById('scl_pin').value = val;
       if (key == "FLIP") document.getElementById('is_flip_mode').value = val;
-      if (key == "Glyph_TEXT") document.getElementById('cTxt').value = val;
+      if (key == "GLYPH_TEXT") document.getElementById('cTxt').value = val;
       if (key == "CLOCK_FACE") document.getElementById('clkFace').value = val;
       if (key == "TIME_24H") document.getElementById('time24').checked = (val == "1");
-      if (key == "Glyph_FONT") document.getElementById('cFnt').value = val;
-      if (key == "Glyph_ANIM") document.getElementById('cAnm').value = val;
+      if (key == "GLYPH_FONT") document.getElementById('cFnt').value = val;
+      if (key == "GLYPH_ANIM") document.getElementById('cAnm').value = val;
       if (key == "WIFI_SSID") document.getElementById('wf_ssid').value = val;
       if (key == "WIFI_PASS") document.getElementById('wf_pass').value = val;
       if (key == "ADMIN_PWD") document.getElementById('admin_pwd').value = val;
@@ -1535,6 +1553,31 @@
     }
     function send(k, v) { sendRaw(`${k}:${v}`); }
     function sendCmd(cmd) { sendRaw(cmd); }
+
+    async function pushGlyph() {
+      const text = document.getElementById('cTxt').value;
+      const font = document.getElementById('cFnt').value;
+      const anim = document.getElementById('cAnm').value;
+
+      log(`Pushing glyph: text="${text}", font=${font}, anim=${anim}`);
+
+      await sendRaw(`GLYPH_FONT:${font}`);
+      await sendRaw(`GLYPH_ANIM:${anim}`);
+      await sendRaw(`GLYPH_TEXT:${text}`);
+
+      const btn = document.getElementById('pushGlyphBtn');
+      if (btn) {
+        const oldHTML = btn.innerHTML;
+        btn.innerHTML = "<i class='fas fa-check me-2'></i> Sent & Activated!";
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-success');
+        setTimeout(() => {
+          btn.innerHTML = oldHTML;
+          btn.classList.remove('btn-success');
+          btn.classList.add('btn-primary');
+        }, 2000);
+      }
+    }
 
     function setAlarm() {
       const h = document.getElementById('aH').value;
@@ -1720,6 +1763,17 @@
       const rgbString = `rgb(${r}, ${g}, ${b})`;
       document.getElementById('rgb-string').innerText = rgbString;
       document.getElementById('color-preview').style.backgroundColor = rgbString;
+
+      const picker = document.getElementById('ledColorPicker');
+      if (picker) {
+        picker.value = rgbToHex(r, g, b);
+      }
+    }
+
+    function pickColorPicker(hex) {
+      const [r, g, b] = hexToRgb(hex);
+      setHslInputsFromRgb(r, g, b);
+      send('LED_COLOR', `${r},${g},${b}`);
     }
 
     function toggleLedPower(checked) {

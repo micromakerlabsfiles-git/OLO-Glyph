@@ -105,10 +105,16 @@ Connect your components using this pin mapping for the ESP32-C3 SuperMini:
 
 ---
 
-## 💻 Web Serial Firmware Flasher
+## 💻 Software Setup
 
-The integrated flasher on the main page of the controller uses the official ESP Web Tools framework to download and flash firmware directly to the ESP32-C3 via USB.
-
-Prerequisites
-Connect your ESP32-C3 Super Mini board to your computer via a USB-C data cable.
-Open this web page : [https://micromakerlabsfiles-git.github.io/OLOBit_Web_Controller/](https://micromakerlabsfiles-git.github.io/OLO-Glyph/) in Chrome, Edge, or Opera.
+This project is configured as a **PlatformIO** environment:
+1. Open the project folder in VS Code with PlatformIO installed.
+2. The `platformio.ini` automatically downloads required dependencies:
+   - `Adafruit GFX Library`
+   - `Adafruit SSD1306`
+   - `Adafruit SH110X`
+   - `Arduino_JSON`
+   - `U8g2_for_Adafruit_GFX` (for premium fonts)
+   - `Adafruit NeoPixel`
+3. Click the PlatformIO **Build** button or run the command `pio run` to compile.
+4. Upload the generated binary to the device over USB.
